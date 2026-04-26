@@ -1,8 +1,9 @@
 class YoutubeSearch < Formula
   desc "Save & search YouTube transcripts locally (Chrome ext + local server)"
   homepage "https://github.com/Woodman11/youtube-search"
-  url "https://github.com/Woodman11/youtube-search/archive/refs/tags/v0.1.0.tar.gz"
-  sha256 "d733177818b06399357274bf67db96b6559d429e382d92ba133a92b8e863f8e3"
+  url "https://github.com/Woodman11/youtube-search/archive/refs/tags/v0.1.1.tar.gz"
+  sha256 "8517ab0c616c15ca3a1ca34405442aea68808d8af4c1c9a0217978640c425972"
+  license "MIT"
 
   depends_on "python@3.13"
   depends_on "yt-dlp"
