@@ -16,17 +16,30 @@ on:
 # A workflow has one or more `jobs`. Jobs run in parallel by default.
 jobs:
   install:
-    # `strategy.matrix` runs this same job once per combination below.
+    # `strategy.matrix` runs this same job once per entry in `include`.
     # macos-14 = Apple Silicon (arm64), macos-13 = Intel (x86_64).
     # `fail-fast: false` means one failing arch doesn't cancel the other.
+    # `experimental: true` on macos-13 lets the overall workflow stay green
+    #   even if the Intel job fails or never gets a runner — GitHub has
+    #   been throttling Intel macOS runners hard as they wind that
+    #   hardware down. We still want occasional Intel coverage when
+    #   capacity exists, but we don't want it blocking the build status.
     strategy:
       fail-fast: false
       matrix:
-        os: [macos-14, macos-13]
+        include:
+          - os: macos-14
+            experimental: false
+          - os: macos-13
+            experimental: true
 
     # Which VM image to run on. ${{ }} is GitHub Actions' template syntax —
-    # here it expands to whichever os the matrix is currently iterating.
+    # here it expands to the current matrix entry's `os` value.
     runs-on: ${{ matrix.os }}
+
+    # When `experimental` is true, a step failure in this job is still
+    # reported but doesn't fail the overall workflow conclusion.
+    continue-on-error: ${{ matrix.experimental }}
 
     # Steps run sequentially inside the VM. Each step is either a shell
     # command (`run:`) or a reusable action (`uses:`).
