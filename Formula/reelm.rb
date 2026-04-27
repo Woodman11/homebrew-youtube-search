@@ -1,8 +1,8 @@
 class Reelm < Formula
   desc "Save & search YouTube transcripts locally (Chrome ext + local server)"
-  homepage "https://github.com/Woodman11/youtube-search"
-  url "https://github.com/Woodman11/youtube-search/archive/refs/tags/v0.2.2.tar.gz"
-  sha256 "7f77d64e19bc8027a50410d0c117ddbf0da0a6c4ee7e072faed4d891d85b6e99"
+  homepage "https://github.com/Woodman11/reelm"
+  url "https://github.com/Woodman11/reelm/archive/refs/tags/v0.2.2.tar.gz"
+  sha256 "7dcffee2a9ac3fcc13ac66a3e12fe2549383a4780aa156c21b9bcc886f62ecbf"
   license "MIT"
 
   depends_on "python@3.13"
