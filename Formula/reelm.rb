@@ -47,7 +47,9 @@ class Reelm < Formula
       Chrome extension (manual one-time step):
         1. Open chrome://extensions
         2. Enable Developer mode (top right)
-        3. Load unpacked → #{libexec}/extension
+        3. Click Load unpacked — in the dialog press Cmd+Shift+G, paste:
+             #{libexec}/extension
+           and hit Enter
         4. Pin the icon if you want the popup search
 
       Start the server in the background:
