@@ -9,6 +9,7 @@ class Reelm < Formula
   depends_on "yt-dlp"
 
   def install
+    (var/"log/reelm").mkpath
     libexec.install "paths.py", "server.py", "maintain.py", "search.py", "extension"
 
     # Use the versioned python3.13 binary — the bare `python3` symlink
