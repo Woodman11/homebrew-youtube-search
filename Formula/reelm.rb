@@ -57,7 +57,8 @@ class Reelm < Formula
 
       If macOS blocks the service at first login, go to:
         System Settings → General → Login Items & Extensions
-      Find reeLm and enable it, then: brew services restart reelm
+      Find the magnifying glass entry for reeLm, toggle it OFF then ON,
+      then run: brew services restart reelm
 
       The maintenance job (retry failed transcripts, optimize FTS, vacuum,
       rotate logs) is not auto-scheduled by this formula. Run it manually
