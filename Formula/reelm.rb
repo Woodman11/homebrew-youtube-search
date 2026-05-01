@@ -19,8 +19,8 @@ class Reelm < Formula
   end
 
   def post_install
-    system "mkdir", "-p", "#{Dir.home}/Library/Logs/reelm"
-    system "mkdir", "-p", "#{Dir.home}/Library/Application Support/Reelm"
+    FileUtils.mkdir_p "#{Dir.home}/Library/Logs/reelm"
+    FileUtils.mkdir_p "#{Dir.home}/Library/Application Support/Reelm"
   end
 
   service do
