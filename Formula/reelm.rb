@@ -1,33 +1,21 @@
 class Reelm < Formula
   desc "Save & search YouTube transcripts locally (Chrome ext + local server)"
   homepage "https://github.com/Woodman11/reelm"
-  url "https://github.com/Woodman11/reelm/archive/refs/tags/v0.2.2.tar.gz"
-  sha256 "7dcffee2a9ac3fcc13ac66a3e12fe2549383a4780aa156c21b9bcc886f62ecbf"
+  url "https://github.com/Woodman11/reelm/archive/refs/tags/v0.2.3.tar.gz"
+  sha256 "085f2cb752be044592f9b69e7a2ebbd075c948e0a7b30ff5ce23e18def53a399"
   license "MIT"
 
-  depends_on "python@3.13"
+  depends_on "go" => :build
   depends_on "yt-dlp"
 
   def install
-    (var/"log/reelm").mkpath
-    libexec.install "paths.py", "server.py", "maintain.py", "search.py", "extension"
+    system "go", "build", "-o", bin/"reelm", "."
+    libexec.install "extension"
 
-    # Use the versioned python3.13 binary — the bare `python3` symlink
-    # isn't always present (e.g. on GitHub Actions macOS runners).
-    py = Formula["python@3.13"].opt_bin/"python3.13"
-    ytdlp_bin = Formula["yt-dlp"].opt_bin
-
-    {
-      "server"   => "reelm-server",
-      "maintain" => "reelm-maintain",
-      "search"   => "reelm",
-    }.each do |script, cmd|
-      (bin/cmd).write <<~SH
-        #!/bin/bash
-        export PATH="#{ytdlp_bin}:$PATH"
-        exec "#{py}" "#{libexec}/#{script}.py" "$@"
-      SH
-    end
+    (bin/"reelm-maintain").write <<~SH
+      #!/bin/bash
+      exec "#{bin}/reelm" maintain "$@"
+    SH
   end
 
   def post_install
@@ -36,8 +24,9 @@ class Reelm < Formula
   end
 
   service do
-    run [opt_bin/"reelm-server"]
+    run [opt_bin/"reelm", "serve"]
     keep_alive true
+    environment_variables PATH: "#{Formula["yt-dlp"].opt_bin}:#{HOMEBREW_PREFIX}/bin:/usr/bin:/bin:/usr/sbin:/sbin"
     log_path "#{Dir.home}/Library/Logs/reelm/server.log"
     error_log_path "#{Dir.home}/Library/Logs/reelm/server.log"
   end
