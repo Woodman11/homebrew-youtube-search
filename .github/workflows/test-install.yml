@@ -27,7 +27,7 @@ jobs:
     steps:
       # actions/checkout is GitHub's prebuilt step that clones the repo
       # into the VM so subsequent steps can read its files.
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       # Install the formula from this checkout (not the published tap).
       # That way a broken formula commit fails CI before it goes live.
